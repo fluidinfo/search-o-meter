@@ -28,6 +28,6 @@ I used a tool called flimp (FLuiddb IMPorter) to add the metadata from the
 government sites. Flimp was also used to import this application into FluidDB
 (yes, that's right, this application is both logic and data within FluidDB).
 The application itself was built using simple HTML, CSS and Javascript over
-the course of an afternoon (check the git log).
+the course of an afternoon.
 
 More information about FluidDB can be found here: http://fluidinfo.com
