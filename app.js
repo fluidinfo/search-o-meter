@@ -3,7 +3,7 @@
  *
  * (c) 2010 Fluidinfo Inc. http://fluidinfo.com
  *
- * Based upon the Sammy javascript framework: http://code.quirkey.com/sammy/
+ * Uses the awesome Sammy javascript framework: http://code.quirkey.com/sammy/
  */
 (function($) {
     var app = $.sammy(function() {
@@ -21,21 +21,30 @@
             var $search_results = $('#search_results');
             // empty the element
             $('#loading').hide();
+            $search_results.hide();
             $search_results.empty();
             // add the results
             $search_results.append('<h2>Results</h2>');
             if (data.ids.length>0) {
+                $search_results.append('<ul class="paging"></ul>');
+                pager = $('ul.paging');
                 for(item in data.ids) {
                     object_id = data.ids[item];
-                    fluidDB.get('objects/'+object_id+'/fluiddb/about', function(data){display_item(data, object_id, $search_results);}, true);
+                    display_item(object_id, pager);
                 }
             } else {
                 $search_results.append('<div>None found. Please try again...</div>');
             }
+            page_size = 10;
+            if (data.ids.length>200) {
+                page_size = data.ids.length/20;
+            }
+            pager.quickPager({pageSize: page_size, pagerLocation: "both"});
+            $search_results.fadeIn();
         }
 
-        function display_item(data, object_id, $search_results){
-            $search_results.append('<div>'+data+'</div>');
+        function display_item(object_id, pager){
+            pager.append('<li>'+object_id+'</li>');
         }
 
         /**********************************************************************
@@ -52,6 +61,8 @@
          */
         this.post('#/search', function(context) {
             var search_term = context['params']['search'];
+            sr = $('#search_results');
+            sr.hide();
             // Basic validation
             if (search_term.length > 0) {
                 try {
@@ -60,6 +71,7 @@
                 }
                 catch (err) {
                     $('#loading').hide();
+                    sr.show();
                     $('#search_results').append('<h3>There was a problem with your search :-(<h3><p>Please try again...</p>');
                 }
             } else {

@@ -28,9 +28,10 @@
                         and <a href="http://data.gov.uk/">data.gov.uk</a>. 
                     </p>
                     <p>
-                        This web-application allows you to search this data
+                        <a href="http://github.com/fluidinfo/search-o-meter">This
+                        web-application</a> allows you to search the data
                         using FluidDB's
-                        <a href="/#help">simple yet powerful query language</a>.
+                        <a href="#" class="jqModal">simple yet powerful query language</a>.
                     </p>
                     <p>
                         Find out more about FluidDB's 
@@ -44,11 +45,113 @@
                         <input size="48" type="text" name="search"
                         id="search_box"/>
                         <input type="submit" value="Submit"/>
-                        <a href="/#help">Help</a>
+                        <a href="#" class="jqModal">Help</a>
                     </form>
                     <div id="loading" style="display: none;">
                         <img src="images/ajax-loader.gif" alt="Working..."/>
                     </div>
+                </div>
+                <div class="jqmWindow" id="dialog">
+                    <a href="#" class="jqmClose"><img src="images/cancel.png"
+                        alt="Close"/>Close</a>
+                    <h1>Help!</h1>
+                    <p>FluidDB provides a simple query language that allows
+                        applications to search
+                        for objects based on their tags&#8217; values. The
+                        following kinds of queries are
+                        possible:</p> 
+                    <ul> 
+                        <li><strong>Equality &amp; Inequality:</strong> To
+                            find objects based on the numeric value of
+                            tags, e.g., <tt class="docutils literal"><span
+                                    class="pre">tim/rating</span> <span
+                                    class="pre">&gt;</span> <span
+                                    class="pre">5</span></tt>, or exact
+                            textual values,
+                            e.g., <tt class="docutils literal"><span
+                                    class="pre">geo/name</span> <span
+                                    class="pre">=</span> <span
+                                    class="pre">&quot;Llandefalle&quot;</span></tt>.</li> 
+                        <li><strong>Textual:</strong> To find objects based on
+                            text matching of their tag values,
+                            e.g., <tt class="docutils literal"><span
+                                    class="pre">sally/opinion</span> <span
+                                    class="pre">matches</span> <span
+                                    class="pre">fantastic</span></tt>. Text
+                            matching is done with
+                            <a class="reference"
+                                href="http://lucene.apache.org/java/docs/">Lucene</a>,
+                            meaning that Lucene
+                            matching capabilities and style will be available.</li> 
+                        <li><strong>Presence:</strong> Use <tt class="docutils
+                                literal"><span class="pre">has</span></tt> to
+                            request objects that have a given tag. For
+                            example, <tt class="docutils literal"><span
+                                    class="pre">has</span> <span
+                                    class="pre">sally/opinion</span></tt>.</li> 
+                        <li><strong>Set contents:</strong> A tag on an object
+                            can hold a set of strings. For
+                            example, a tag called <tt class="docutils
+                                literal"><span
+                                    class="pre">mary/product-reviews/keywords</span></tt>
+                            might be on an
+                            object with a value of <tt class="docutils
+                                literal"><span class="pre">[</span> <span
+                                    class="pre">&quot;cool&quot;,</span> <span
+                                    class="pre">&quot;kids&quot;,</span> <span
+                                    class="pre">&quot;adventure&quot;</span>
+                                <span class="pre">]</span></tt>. The
+                            <tt class="docutils literal"><span
+                                    class="pre">contains</span></tt> operator
+                            can be used to select objects with a matching
+                            value. The query <tt class="docutils
+                                literal"><span
+                                    class="pre">mary/product-reviews/keywords</span>
+                                <span class="pre">contains</span> 
+                                <span class="pre">&quot;kids&quot;</span></tt>
+                            would match the object in this example.</li> 
+                        <li><strong>Exclusion:</strong> You can exclude
+                            objects with the <tt class="docutils
+                                literal"><span class="pre">except</span></tt>
+                            keyword. For
+                            example <tt class="docutils literal"><span
+                                    class="pre">has</span> <span
+                                    class="pre">nytimes.com/appeared</span>
+                                <span class="pre">except</span> <span
+                                    class="pre">has</span> <span
+                                    class="pre">james/seen</span></tt>. The
+                            <tt class="docutils literal"><span
+                                    class="pre">except</span></tt> operator
+                            performs a set difference.</li> 
+                        <li><strong>Logic:</strong> Query components can be
+                            combined with <tt class="docutils literal"><span
+                                    class="pre">and</span></tt> and <tt
+                                class="docutils literal"><span
+                                    class="pre">or</span></tt>. For
+                            example, <tt class="docutils literal"><span
+                                    class="pre">has</span> <span
+                                    class="pre">sara/rating</span> <span
+                                    class="pre">and</span> <span
+                                    class="pre">tim/rating</span> <span
+                                    class="pre">&gt;</span> <span
+                                    class="pre">5</span></tt>.</li> 
+                        <li><strong>Grouping:</strong> Parentheses can be used
+                            to group query components. For
+                            example, <tt class="docutils literal"><span
+                                    class="pre">has</span> <span
+                                    class="pre">sara/rating</span> <span
+                                    class="pre">and</span> <span
+                                    class="pre">(tim/rating</span> <span
+                                    class="pre">&gt;</span> <span
+                                    class="pre">5</span> <span
+                                    class="pre">or</span> <span
+                                    class="pre">mike/rating</span> <span
+                                    class="pre">&gt;</span> <span
+                                    class="pre">7)</span></tt>.</li> 
+                    </ul> 
+                    <p>That&#8217;s it!</p>
+                    <h2>Examples</h2>
+                    <p>To be done</p>
                 </div>
                 <div id="search_results">
                 </div>
@@ -58,8 +161,15 @@
             <p>The source code for this page is &copy; 2010 Fluidinfo Inc.</p>
         </div>
         <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script> 
+        <script type="text/javascript" src="js/jqModal.js"></script> 
+        <script type="text/javascript" src="js/quickpager.jquery.js"></script> 
         <script type="text/javascript" src="js/fluiddb.js"></script> 
         <script type="text/javascript" src="js/sammy.js"></script>
         <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript">
+            $().ready(function(){
+                    $('#dialog').jqm();
+            });
+        </script>
     </body>
 </html>
